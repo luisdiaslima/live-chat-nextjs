@@ -16,3 +16,17 @@ a {
 * {
   box-sizing: border-box;
 }
+
+::-webkit-scrollbar{
+	width: 3.5px;
+}
+
+::-webkit-scrollbar-track-piece{
+  background: rgb(124, 124, 124);
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb{
+  background: #fff;
+  border-radius: 50px;
+}

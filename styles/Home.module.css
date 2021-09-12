@@ -137,34 +137,33 @@
 .cardMessage {
   margin: 1rem;
   padding: 1.5rem;
-  text-align: left;
+
   color: black;
+
+  align-items: center;
   font-weight: 500;
-  text-decoration: none;
-  border: 1px solid;
-  background-color: #a044ff;
+  width: 65%;
   border-radius: 10px;
   transition: color 0.15s ease, background-color 0.15s ease;
+  text-decoration: none;
+  background-color: #a044ff;
 
-  width: 65%;
-  min-height: 20px;
 }
 
 .cardMessageMe {
   margin: 1rem;
   padding: 1.5rem;
-  text-align: left;
+
+  background-color: #FFF;
   color: black;
+
+  align-items: center;
   font-weight: 500;
-  text-decoration: none;
-  border: 1px solid;
-  background-color: #faf6fd;
+  width: 65%;
+  align-self: flex-end;
   border-radius: 10px;
   transition: color 0.15s ease, background-color 0.15s ease;
-
-  align-self: flex-end;
-  width: 65%;
-  min-height: 20px;
+  text-decoration: none;
 }
 
 .cardMessage p {

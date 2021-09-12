@@ -3,7 +3,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { BouncyDiv } from '../styles/styled'
 import InputEmoji from "react-input-emoji";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from "framer-motion"
 
 import * as uuid from 'uuid';
@@ -21,17 +21,26 @@ interface Payload {
   text: string;
 }
 
-const socket = io('http://localhost:3333');
+const socket = io('http://localhost:3333', {transports: ['websocket', 'polling', 'flashsocket']});
 
 const NChat: NextPage = () => {
   const [name, setName] = useState("");
   const [text, setText] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
 
-  // useEffect(() => {
-  //   const getName = localStorage.getItem('name')
-  //   setName(getName || '')
-  // }, [])
+  const drawerRef = useRef(null);
+
+  function scrollToBottom() {
+    drawerRef?.current?.scrollIntoView({
+      block: 'end',
+      behavior: 'smooth',
+    });
+  }
+
+  useEffect(() => {
+    const getName = localStorage.getItem('name')
+    setName(getName || '')
+  }, [])
 
   useEffect(() => {
     function receivedMessage(message: Payload) {
@@ -42,14 +51,13 @@ const NChat: NextPage = () => {
       };
 
       setMessages([...messages, newMessage]);
+      scrollToBottom()
     }
 
     socket.on('msgToClient', (message: Payload) => {
       receivedMessage(message);
     });
-  }, [messages, name, text]);
-
-  console.log(messages)
+  }, [text, name, messages]);
 
   function validateInput() {
     return name.length > 0 && text.length > 0;
@@ -67,6 +75,11 @@ const NChat: NextPage = () => {
     }
   }
 
+  const variants = {
+    old: { opacity: 1, x: 0 },
+    closed: { opacity: [0, 1], x: "10px" },
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -75,23 +88,10 @@ const NChat: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
-
       <main className={styles.main}>
         <h1 className={styles.title}>
           Se divirta, <label className={styles.hello}>{name}!</label>
         </h1>
-
-        <p className={styles.description}>
-          O chat é público, seja educado.
-        </p>
-
-        <input
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder="Enter name..."
-        />
 
         <BouncyDiv>
           <div className={styles.grid}>
@@ -101,43 +101,35 @@ const NChat: NextPage = () => {
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'column'
+                  flexDirection: 'column',
+                  maxHeight: 250,
+                  overflowY: 'auto',
                 }}
               >
-                <motion.div
-                  className={styles.cardMessage}
-                  animate={{
-                    scale: [0, 0, 1, 1, 1],
-                  }}
-                >
-                  <p>
-                    someone:
-                  </p>
-                  oi
-                </motion.div>
-
-                <motion.div
-                  className={styles.cardMessageMe}
-                  animate={{
-                    scale: [0, 0, 1, 1, 1],
-                  }}
-                >
-                  <p>
-                    {name}:
-                  </p>
-                  oi
-                </motion.div>
-
+                {messages.map((message, index) => (
+                    <motion.div
+                      ref={drawerRef}
+                      key={message.id}
+                      className={name === message.name ? styles.cardMessageMe : styles.cardMessage}
+                      animate={messages.length === index + 1 ? 'closed' : 'old'}
+                      variants={variants}
+                    >
+                      <p>
+                        {message.name}:
+                      </p>
+                      
+                      {message.text}
+                    </motion.div>
+                ))}
               </div>
 
-              <input
+              <InputEmoji
                 value={text}
-                onChange={e => setText(e.target.value)}
-                placeholder="Enter message..."
+                onChange={setText}
+                cleanOnEnter
+                onEnter={sendMessage}
+                placeholder="lança a braba ae"
               />
-              <button type="button" onClick={() => sendMessage()}>
-                Send
-              </button>
             </div>
           </div>
         </BouncyDiv>
