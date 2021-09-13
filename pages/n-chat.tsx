@@ -21,7 +21,7 @@ interface Payload {
   text: string;
 }
 
-const socket = io('http://localhost:3333', {transports: ['websocket', 'polling', 'flashsocket']});
+const socket = io('https://warm-depths-70172.herokuapp.com/', { transports: ['websocket', 'polling', 'flashsocket'] });
 
 const NChat: NextPage = () => {
   const [name, setName] = useState("");
@@ -107,19 +107,19 @@ const NChat: NextPage = () => {
                 }}
               >
                 {messages.map((message, index) => (
-                    <motion.div
-                      ref={drawerRef}
-                      key={message.id}
-                      className={name === message.name ? styles.cardMessageMe : styles.cardMessage}
-                      animate={messages.length === index + 1 ? 'closed' : 'old'}
-                      variants={variants}
-                    >
-                      <p>
-                        {message.name}:
-                      </p>
-                      
-                      {message.text}
-                    </motion.div>
+                  <motion.div
+                    ref={drawerRef}
+                    key={message.id}
+                    className={name === message.name ? styles.cardMessageMe : styles.cardMessage}
+                    animate={messages.length === index + 1 ? 'closed' : 'old'}
+                    variants={variants}
+                  >
+                    <p>
+                      {message.name}:
+                    </p>
+
+                    {message.text}
+                  </motion.div>
                 ))}
               </div>
 
