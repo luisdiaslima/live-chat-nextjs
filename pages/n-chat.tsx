@@ -105,12 +105,12 @@ const NChat: NextPage = () => {
                   maxHeight: 250,
                   overflowY: 'auto',
                 }}
-                ref={drawerRef}
               >
                 {messages.map((message, index) => (
                   <div
                     key={message.id}
                     className={name === message.name ? styles.cardMessageMe : styles.cardMessage}
+                    ref={drawerRef}
                     // animate={messages.length === index + 1 ? 'closed' : 'old'}
                     // variants={variants}
                   >
