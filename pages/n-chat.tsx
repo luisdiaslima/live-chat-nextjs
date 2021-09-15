@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.css'
 import { BouncyDiv } from '../styles/styled'
 import InputEmoji from "react-input-emoji";
 import { useEffect, useRef, useState } from 'react';
-import { motion } from "framer-motion"
+// import { motion } from "framer-motion"
 
 import * as uuid from 'uuid';
 
@@ -105,21 +105,21 @@ const NChat: NextPage = () => {
                   maxHeight: 250,
                   overflowY: 'auto',
                 }}
+                ref={drawerRef}
               >
                 {messages.map((message, index) => (
-                  <motion.div
-                    ref={drawerRef}
+                  <div
                     key={message.id}
                     className={name === message.name ? styles.cardMessageMe : styles.cardMessage}
-                    animate={messages.length === index + 1 ? 'closed' : 'old'}
-                    variants={variants}
+                    // animate={messages.length === index + 1 ? 'closed' : 'old'}
+                    // variants={variants}
                   >
                     <p>
                       {message.name}:
                     </p>
 
                     {message.text}
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 
