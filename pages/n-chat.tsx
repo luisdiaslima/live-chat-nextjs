@@ -44,7 +44,7 @@ const NChat: NextPage = () => {
   }, [])
 
   useEffect(() => {
-    inputRef.current?.focus();
+    // inputRef.current?.focus();
     function receivedMessage(message: Payload) {
       const newMessage: Message = {
         id: uuid.v4(),
@@ -124,6 +124,10 @@ const NChat: NextPage = () => {
                   </div>
                 ))}
               </div>
+
+              <input
+                autoFocus
+              />
 
               <InputEmoji
                 ref={inputRef}
