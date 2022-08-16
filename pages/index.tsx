@@ -11,6 +11,11 @@ const Identify: NextPage = () => {
   const router = useRouter()
   const [text, setText] = useState("");
 
+  function redirectNext() {
+    router.push('/n-chat')
+  }
+
+
   function handleOnEnter(text: string) {
     localStorage.setItem('name', text)
     router.push('/n-chat')
@@ -24,7 +29,7 @@ const Identify: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
+        <h1 onClick={() => redirectNext()} className={styles.title}>
           Bem-vindo ao <label className={styles.welcome}>nChat!</label>
         </h1>
 
