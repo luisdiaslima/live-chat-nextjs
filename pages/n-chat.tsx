@@ -123,7 +123,12 @@ const NChat: NextPage = () => {
                 ))}
               </div>
 
+              <input 
+                autoFocus
+              />
+
               <InputEmoji
+                autoFocus
                 value={text}
                 onChange={setText}
                 cleanOnEnter
