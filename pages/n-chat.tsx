@@ -30,6 +30,7 @@ const NChat: NextPage = () => {
 
   const drawerRef = useRef(null);
 
+  const inputRef = useRef(null);
   function scrollToBottom() {
     drawerRef?.current?.scrollIntoView({
       block: 'end',
@@ -43,6 +44,7 @@ const NChat: NextPage = () => {
   }, [])
 
   useEffect(() => {
+    inputRef.current?.focus();
     function receivedMessage(message: Payload) {
       const newMessage: Message = {
         id: uuid.v4(),
@@ -123,12 +125,8 @@ const NChat: NextPage = () => {
                 ))}
               </div>
 
-              <input 
-                autoFocus
-              />
-
               <InputEmoji
-                autoFocus
+                ref={inputRef}
                 value={text}
                 onChange={setText}
                 cleanOnEnter
